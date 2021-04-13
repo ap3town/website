@@ -207,12 +207,50 @@
                 +'<img src="img/logo.svg?ap3" class="img-web3wallet" alt="ap3 logo" />'
                 +'<h5>0.000000</h5>'
                 +'<p>AP3 IN YOUR WALLET</p>'
-                +'<button class="default-btn">CONNECT WALLET</button>');
+                +'<button class="default-btn" onclick="initWallet()">CONNECT WALLET</button>');
             
         };
         web3wallet();
 
+
+
     });
 
-
 })(jQuery);
+
+const Web3Modal = window.Web3Modal.default;
+
+async function initWallet() {
+    
+    console.log("Initializing example");
+    console.log("WalletConnectProvider is", WalletConnectProvider); 
+    console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
+    
+    /*
+    if(location.protocol !== 'https:') {
+        // https://ethereum.stackexchange.com/a/62217/620
+        console.log("#alert-error-https");
+        return;
+    }
+    */
+    
+    
+    var providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider, // required
+        options: {
+          infuraId: "27e484dcd9e3efcfd25a83a78777cdf1" // required
+        }
+      }
+    }
+
+    var web3Modal = new Web3Modal({
+      network: "mainnet", // optional
+      cacheProvider: true, // optional
+      providerOptions // required
+    });
+      
+    var provider = await web3Modal.connect();
+
+    App.web3 = new Web3(provider);
+}
