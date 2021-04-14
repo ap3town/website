@@ -203,12 +203,15 @@
         /* wallet Init
         ============================ */
         function web3wallet() {
+            var btnConnect = '<button class="default-btn" onclick="Dapp.init()">CONNECT WALLET</button>';
+            
             $("#web3wallet").html(''
                 +'<img src="img/logo.svg?ap3" class="img-web3wallet" alt="ap3 logo" />'
                 +'<h5>0.000000</h5>'
                 +'<p>AP3 IN YOUR WALLET</p>'
-                +'<button class="default-btn" onclick="initWallet()">CONNECT WALLET</button>');
-            
+                +btnConnect );
+          
+            $(".cd-nav-trigger").html(btnConnect);  
         };
         web3wallet();
 
@@ -218,39 +221,187 @@
 
 })(jQuery);
 
-const Web3Modal = window.Web3Modal.default;
 
-async function initWallet() {
-    
-    console.log("Initializing example");
-    console.log("WalletConnectProvider is", WalletConnectProvider); 
-    console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
-    
-    /*
-    if(location.protocol !== 'https:') {
-        // https://ethereum.stackexchange.com/a/62217/620
-        console.log("#alert-error-https");
-        return;
-    }
-    */
-    
-    
-    var providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider, // required
-        options: {
-          infuraId: "27e484dcd9e3efcfd25a83a78777cdf1" // required
+
+const Dapp = {
+    web3: null,
+    start: async function() {
+        const { web3 } = this;
+        //  Get Accounts
+        const accounts = await web3.eth.getAccounts();
+        await this.accounts( accounts );
+        
+        
+        //  Get Network Id
+        const networkId = await web3.eth.net.getId();
+        await this.networkId( networkId );
+        
+
+    },
+    disconnect: async function() {
+        console.log('disconnect');
+    },
+    accounts: async function(accounts){
+        address.substring(0, 6) + "..." + address.slice(-4);
+        
+        console.log('accounts', accounts);
+    },
+    networkId: async function(networkId){
+        
+        console.log('networkId', networkId);
+    },
+    init: async function(){
+        
+        console.log("Initializing...");
+        
+        initOverlay();
+        
+    },
+    initWalletConnect: async function(){ 
+        // walletConnect / trust wallet
+        
+        const WalletConnectProvider = window.WalletConnectProvider.default;
+        const provider = new WalletConnectProvider({
+            chainId: 97,
+            rpc: {
+                56: 'https://bsc-dataseed.binance.org/',
+                97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+            },
+            qrcode: true
+        });
+        
+        await provider.enable();
+        
+        Dapp.web3 = new Web3(provider);
+        Dapp.start();
+        
+        provider.on("disconnect", function(code, reason) {
+            Dapp.disconnect();
+        });
+        
+        provider.on("accountsChanged", function(accounts) {
+            Dapp.accounts(accounts);
+        });
+        
+        provider.on('networkChanged', function (networkId) {
+            Dapp.networkId(networkId);
+        });
+        
+    },
+    initMetamask: async function () {
+        
+        if (window.ethereum) {
+            
+            Dapp.web3 = new Web3(window.ethereum);
+            window.ethereum.enable();
+            Dapp.start();
+            
+            window.ethereum.on("disconnect", function(code, reason) {
+                Dapp.disconnect();
+            });
+            
+            window.ethereum.on("accountsChanged", function(accounts) {
+                Dapp.accounts(accounts);
+            });
+            
+            window.ethereum.on('networkChanged', function (networkId) {
+                Dapp.networkId(networkId);
+            });
+            
+            
+            return true;
         }
-      }
+        
+        return false;
     }
+};
 
-    var web3Modal = new Web3Modal({
-      network: "mainnet", // optional
-      cacheProvider: true, // optional
-      providerOptions // required
+
+var overlayNav = $('.cd-overlay-nav'),
+    overlayContent = $('.cd-overlay-content'),
+    wallet = $('.cd-wallet'),
+    toggleNav = $('.cd-nav-trigger');
+    
+jQuery(document).ready(function($) {
+    layerInit();
+});
+
+$(window).on('resize', function() {
+    window.requestAnimationFrame(layerInit);
+});
+
+/*
+toggleNav.on('click', function() {
+    if (!toggleNav.hasClass('close-nav')) {
+    } else {
+    }
+});
+*/
+
+function initOverlay(){
+    toggleNav.addClass('close-nav');
+    overlayNav.children('span').velocity({
+        translateZ: 0,
+        scaleX: 1,
+        scaleY: 1,
+    }, 500, 'easeInCubic', function() {
+        wallet.addClass('fade-in');
     });
-      
-    var provider = await web3Modal.connect();
+}
+function deinitOverlay(){
+    toggleNav.removeClass('close-nav');
+    overlayContent.children('span').velocity({
+        translateZ: 0,
+        scaleX: 1,
+        scaleY: 1,
+    }, 500, 'easeInCubic', function() {
+        wallet.removeClass('fade-in');
+        overlayNav.children('span').velocity({
+            translateZ: 0,
+            scaleX: 0,
+            scaleY: 0,
+        }, 0);
+        overlayContent.addClass('is-hidden').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+            overlayContent.children('span').velocity({
+                translateZ: 0,
+                scaleX: 0,
+                scaleY: 0,
+            }, 0, function() {
+                overlayContent.removeClass('is-hidden')
+            });
+        });
+        if ($('html').hasClass('no-csstransitions')) {
+            overlayContent.children('span').velocity({
+                translateZ: 0,
+                scaleX: 0,
+                scaleY: 0,
+            }, 0, function() {
+                overlayContent.removeClass('is-hidden')
+            });
+        }
+    });
+}
 
-    App.web3 = new Web3(provider);
+function layerInit() {
+    var diameterValue = (Math.sqrt(Math.pow($(window).height(), 2) + Math.pow($(window).width(), 2)) * 2);
+    overlayNav.children('span').velocity({
+        scaleX: 0,
+        scaleY: 0,
+        translateZ: 0,
+    }, 50).velocity({
+        height: diameterValue + 'px',
+        width: diameterValue + 'px',
+        top: -(diameterValue / 2) + 'px',
+        left: -(diameterValue / 2) + 'px',
+    }, 0);
+    overlayContent.children('span').velocity({
+        scaleX: 0,
+        scaleY: 0,
+        translateZ: 0,
+    }, 50).velocity({
+        height: diameterValue + 'px',
+        width: diameterValue + 'px',
+        top: -(diameterValue / 2) + 'px',
+        left: -(diameterValue / 2) + 'px',
+    }, 0);
 }
