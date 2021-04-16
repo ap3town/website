@@ -587,6 +587,8 @@ const Dapp = {
             deinitOverlay('Metamask');
             
             return true;
+        }else{
+            alert("Only modern DApp browser support injected wallet.");
         }
         
         return false;
