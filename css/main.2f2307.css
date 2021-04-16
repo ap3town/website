@@ -96,6 +96,10 @@ ul {
 
 .default-btn:hover {
 	color: #fff;
+	outline: 0;
+}
+.default-btn:focus {
+	outline: 0;
 }
 
 .default-btn::before,
@@ -418,6 +422,7 @@ p {
 	width: calc(100% - 270px);
 	max-width: 100%;
 	float: right;
+	padding-top:70px;
 	position: relative;
 	transition: all .3s cubic-bezier(0.9, 0, 0.2, 1), -webkit-transform .3s cubic-bezier(0.9, 0, 0.2, 1);
 	-webkit-transition: all .3s cubic-bezier(0.9, 0, 0.2, 1), -webkit-transform .3s cubic-bezier(0.9, 0, 0.2, 1);
@@ -435,7 +440,7 @@ p {
 	left: 0;
 	width: 270px;
 	background: #000;
-	z-index: 1000;
+	z-index: 10;
 	padding: 0 20px;
 	overflow-y: auto;
 	transition: all .3s;
@@ -522,21 +527,25 @@ nav ul li a sup {
 /* start header style */
 
 header {
-	background: #3deaa4;
-	padding: 15px 0;
+	padding: 0 0;
 	position: absolute;
 	top: 0;
-	z-index: 999;
+	z-index: 11;
 	width: 100%;
 }
-
+header > div > div {
+	padding:10px 0;
+}
+header .notification {
+	background: #3deaa4;
+}
 header h4 {
 	color: #000;
 	font-size: 18px;
 }
 
-header.fixed {
-	max-width: calc(100% - 270px);
+/*header.fixed {*/
+header{
 	position: fixed;
 	top: -70px;
 	margin-top: 70px;
@@ -546,7 +555,18 @@ header.fixed {
 	-ms-transition: margin 0.3s ease 0s, transform 0.3s ease 0s;
 	-o-transition: margin 0.3s ease 0s, transform 0.3s ease 0s;
 }
+.cd-wallet-trigger {
+	display:none;
+}
 
+@media (min-width: 767.98px) { 
+	header{
+		max-width: calc(100% - 270px);
+	}
+	.disconnected .cd-wallet-trigger {
+		display:block;
+	}
+} 
 body.noscroll header.fixed {
 	max-width: calc(100% - 287px);
 }
@@ -607,6 +627,7 @@ body.noscroll header.fixed {
 
 .home-wrapper {
 	border-bottom: 1px solid #22252d;
+	border-top:0 !important;
 }
 
 .hero-content {
@@ -1312,7 +1333,14 @@ body.noscroll header.fixed {
 	margin: 0;
 }
 
+.presale-wrapper .box-single .overlayPresale  {
+	display:block;
+}
 
+.presale-wrapper .box-single .overlayPresale time {
+	color: #3ce9a2;
+}
+/*
 .presale-wrapper .box-single .overlayPresale {
 	position: absolute;
 	background: rgb(17 19 24 / 90%);
@@ -1321,8 +1349,8 @@ body.noscroll header.fixed {
 	left: 0;
 	right: 0;
 	z-index: 2;
+	display:none;
 }
-
 .presale-wrapper .box-single .overlayPresale p {
 	color: #fff;
 	font-size: 20px;
@@ -1332,7 +1360,7 @@ body.noscroll header.fixed {
 	padding: 0 30px;
 	font-family: 'Jost', sans-serif;
 	opacity: 1;
-}
+}*/
 
 
 .cd-wallet {
@@ -1342,7 +1370,8 @@ body.noscroll header.fixed {
     height: 100%;
     width: 100%;
     padding: 80px 5%;
-    z-index: 999999993;
+    z-index: 13;
+    background-color: #3deaa4;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     visibility: hidden;
@@ -1356,16 +1385,20 @@ body.noscroll header.fixed {
     opacity: 1
 }
 
-.cd-nav-trigger {
-	top: 30px;
+.cd-wallet-trigger {
+	top: 80px;
 	right: 30px;
 	position: fixed; 
-    z-index: 99999;
-    box-shadow: 2px 2px 0 #000;
+    z-index: 11;
+}
+
+.cd-wallet-trigger button {
+    border-radius: 40px;
+    background-color: #fff;
+    transform: scale(1.1);
 }
 
 .is-hidden {
-	/* background fades out at the end of the animation */
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: opacity .3s 0s, visibility 0s .3s;
@@ -1373,21 +1406,19 @@ body.noscroll header.fixed {
 	transition: opacity .3s 0s, visibility 0s .3s;
 }
 
-.cd-overlay-nav,
-.cd-overlay-content {
-	/* containers of the 2 main rounded backgrounds - these containers are used to position the rounded bgs behind the menu icon */
+.cd-overlay-wallet {
 	position: fixed;
-	top: 18px;
-	right: 5%;
+	top: 80px;
+    right: 90px;
 	height: 4px;
 	width: 4px;
-    z-index: 99999999;
-	transform: translateX(-20px) translateY(20px);
+    z-index: 12;
+	transform: translate(-20px, 20px);
 }
 .cd-overlay-content span {
     background-color: #111318;
 }
-.cd-overlay-nav span,
+.cd-overlay-wallet span,
 .cd-overlay-content span {
 	display: inline-block;
 	position: absolute;
@@ -1395,6 +1426,253 @@ body.noscroll header.fixed {
 	will-change: transform;
 	transform: scale(0);
 }
-.cd-overlay-nav span {
+.cd-overlay-wallet span {
     background-color: #3deaa4;
+}
+.cd-overlay-content {
+    z-index: 14;
+	position: fixed;
+	top: 55px;
+	right: 55px;
+	height: 4px;
+	width: 4px;
+}
+.cd-overlay-content.Metamask {
+	top: 50%;
+	right: 50%;
+	transform:translateX(-15vw);
+}
+.cd-overlay-content.walletConnect {
+	top: 50%;
+	right: 50%;
+	transform:translateX(15vw);
+}
+.cd-wallet-close {
+	top: 30px;
+	right: 30px;
+	position: fixed; 
+    z-index: 15;
+    width: 50px;
+    height: 50px;
+    border-radius:50%;
+    background: #111318 url(../img/close.svg) center center no-repeat;
+    background-size:100% 100%;
+    cursor:pointer;
+	transition: all .3s;
+    visibility: hidden;
+    opacity: 0;
+}
+.cd-wallet-close.fade-in {
+    visibility: visible;
+    opacity: 1
+}
+.cd-wallet-close:hover {
+	transform:scale(1.15);
+	box-shadow:0 0 50px rgba(0,0,0,0.5);
+}
+
+.wallet-connect {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+	text-align:center;
+    white-space: nowrap;
+}
+
+.wallet-connect>div {
+	height: 30vh;
+	width: 30vw;
+	display:inline-block;
+	transition: all .3s;
+	border-radius:50px;
+	padding:2vh 5vw;
+	cursor:pointer;
+	color:#000;
+}
+.wallet-connect>div:hover {
+	transform:scale(1.15);
+	box-shadow:0 0 50px rgba(0,0,0,0.5);
+	background:#111318;
+	color:#fff;
+}
+.wallet-connect>div img {
+	height:50%;
+	margin:10% auto 5% auto;
+}
+.wallet-connect>div p {
+	font-size:20px;
+	color: inherit;
+}
+.wallet-connect>div small {
+	font-size:13px;
+	opacity:0.5;
+	color: inherit;
+}
+.errplace {
+    position:fixed;
+    top:170px;
+    right:30px;
+    width:270px;
+    z-index: 13;
+}
+.error-alert {
+    background:#ddd;
+    margin:0 0 10px 0;
+	font-size:1rem;
+	padding:10px;
+	color:#000;
+}
+.error-alert.ebg-error {
+    background:#e74c3c;
+}
+.error-alert.ebg-success {
+    background:#3deaa4;
+}
+
+.cd-account {
+	top: 100px;
+    right: 30px;
+    position: fixed;
+    z-index: 11;
+    border-radius: 20px;
+    background:#41444e;
+    border:1px solid #41444e;
+    color:#fff;
+    display:none;
+}
+
+.connected .cd-account {
+	display:block;
+}
+.cd-account .addr-balance,
+.cd-account .addr {
+	display:inline-block;
+    padding: 8px 20px;
+}
+.cd-account .addr{
+	background:#2d2f35;
+    border-radius: 20px;
+	position:relative;
+	cursor:pointer;
+	min-width: 140px;
+    text-align: center;
+}
+.cd-account .addr:hover:before {
+	content:"disconnect";
+	position:absolute;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+	color:#fff;
+	background:#2d2f35;
+    border-radius: 20px;
+    line-height:40px;
+    text-align:center;
+    z-index: 2;
+}
+#presaleError {
+    background: #e74c3c;
+    padding: 10px 15px 10px 15px;
+    text-align: center;
+    position: relative;
+    font-size: 13px;
+    margin: 0;
+}
+
+
+.refaddr {
+    opacity: 0.7;
+	padding:10px 10px;
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word;
+    text-align: left;
+}
+
+#referal {
+    margin: 20px 0 0 0;
+	font-size: 0.8rem;
+    display: block;
+    line-height: 1rem;
+}
+#referal p {
+	margin:0;
+	color: #3eeaa3;
+}
+#referal > div {
+	background: #292d35;
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.refcopy {
+    opacity: 0.7;
+    cursor:pointer;
+    text-align:right;
+	
+}
+.refcopy:hover {
+    opacity: 1;
+	
+}
+
+.default-btn[disabled] {
+	background:#000;
+	cursor:default;
+}
+
+.spinner {
+	background:transparent url(../img/spinner2.svg) center center no-repeat;
+	background-size:100% auto;
+	width:30px;
+	height:30px;
+	display:inline-block;
+    -webkit-animation: fa-spin 1s steps(8) infinite;
+    animation: fa-spin 1s steps(8) infinite;
+    margin: 4px auto;
+}
+@keyframes fa-spin{
+	0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}
+	to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}
+}
+
+.cd-account .spinner {
+	width: 15px;
+    height: 15px;
+    margin:0;
+    opacity:0.5;
+}
+.addr-bnb {
+	border-left:1px solid rgba(255,255,255,0.5);
+	padding-left:5px;
+	margin-left:5px;
+}
+
+.addr-ap3,
+.addr-bnb {
+	min-width: 60px;
+    display: inline-block;
+    text-align: center;
+}
+#presaleBtnisDisconnected p {
+    color: #fff;
+    margin: 20px auto 0 auto;
+    font-size: 1.2rem;
+}
+
+
+#presaleBtnisDisconnected,
+#presaleBtnisConnected,
+#referal {
+	display:none;
+}
+.disconnected #presaleBtnisDisconnected,
+.connected #presaleBtnisConnected,
+.connected #referal {
+	display:block;
 }
