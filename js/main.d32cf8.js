@@ -235,15 +235,45 @@ const Dapp = {
     provider: null,
     providername: null,
     referal: 0,
+    addToWallet: function(x) {
+        if( this.providername == 'metamask' ){
+            this.web3.currentProvider.sendAsync({
+                method: 'wallet_watchAsset',
+                params: {
+                    'type': 'ERC20',
+                    'options': {
+                        'address': config['tokenaddress'],
+                        'symbol': 'AP3',
+                        'decimals': '18',
+                        'image': 'https://ap3.town/img/logo.svg',
+                    },
+                },
+                id: 'ap3_' + ( Math.round(Math.random() * 100000) )
+            }, function (err, data) {
+                if (!err) {
+                    if (data.result) {
+                        console.log('Token added');
+                    } else {
+                        console.log(data);
+                        console.log('Some error');
+                    }
+                } else {
+                    console.log(err.message);
+                }
+            });
+        }else{
+            _t.wallet.notification('Only metamask supported!', 'addtowallet', 'error');
+        }
+    },
     countdown: function(){
         var nextYear = moment.tz(config['presalestart'], "UTC");
 
-		 $('.presalestart').countdown(nextYear.toDate(), function(event) {
+        $('.presalestart').countdown(nextYear.toDate(), function(event) {
 		     var $this = $(this).html(event.strftime(''
-    		     + '<span>%d</span> days '
-    		     + '<span>%H</span> hr '
-    		     + '<span>%M</span> min '
-    		     + '<span>%S</span> sec'));
+                + '<span>%d</span> days '
+                + '<span>%H</span> hr '
+                + '<span>%M</span> min '
+                + '<span>%S</span> sec'));
 		 });
     },
     wallet: {
@@ -363,7 +393,7 @@ const Dapp = {
     },
     disconnect: async function() {
         $("html").attr('class', 'disconnected');
-
+        this.providername = '';
 
         if(this.cBT ){
             clearTimeout(this.cBT );

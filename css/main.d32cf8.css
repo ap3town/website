@@ -1665,7 +1665,10 @@ body.noscroll header.fixed {
     font-size: 1.2rem;
 }
 
-
+#metamaskAddToWallet {
+	margin:20px 0;
+}
+#metamaskAddToWallet,
 #presaleBtnisDisconnected,
 #presaleBtnisConnected,
 #referal {
@@ -1673,6 +1676,7 @@ body.noscroll header.fixed {
 }
 .disconnected #presaleBtnisDisconnected,
 .connected #presaleBtnisConnected,
-.connected #referal {
+.connected #referal,
+.connected #metamaskAddToWallet {
 	display:block;
 }
