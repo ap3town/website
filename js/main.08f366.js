@@ -235,10 +235,13 @@ const Dapp = {
     mode: config['dappmode'],
     defaultref: config['defaultref'],
     tokenaddr: config['tokenaddress'],
+    routeraddr: config['routeraddr'],
+    wethaddr: config['wethaddr'],
     lptokenaddr: null,
     address: 0,
     token: null,
     lptoken: null,
+    router: null,
     contract: 0,
     provider: null,
     providername: null,
@@ -330,6 +333,82 @@ const Dapp = {
             //     }
             // }else{
             // }
+        }
+    },
+    CPT: null,
+    calcPancake: async function(){
+        if(this.T){
+            clearTimeout(this.CPT);
+        }
+        
+        var _t = this,
+            amount = $("#fromPancake").val();
+            
+        if(amount > 0){
+            var swapamount = _t.web3.utils.toWei(amount, "ether"),
+                pairs = [
+                    _t.wethaddr.toLowerCase(),
+                    _t.tokenaddr.toLowerCase()
+                ],
+                out = await _t.router.methods.getAmountsOut( swapamount, pairs ).call(),
+                out = _t.web3.utils.fromWei(out[1]) *1,
+                outSlippage = out*0.95;
+            
+            $('#toPancake').val( tofix(out));
+            $("#toPancakeSlippage").text(tofix(outSlippage));
+            $("#pancakeBtn").stop(true, true).fadeIn();
+        }else{
+            $('#toPancake').val(tofix(0));
+            $("#toPancakeSlippage").text(tofix(0));
+            $("#pancakeBtn").stop(true, true).fadeOut();
+            
+        }
+        
+        this.CPT = setTimeout(function(){
+            _t.calcPancake();
+        }, 800);
+    },
+    buyPancake: async function(){
+        
+        var _t = this,
+            amount = $("#fromPancake").val();
+            
+            
+        if(amount > 0){
+            var swapamount = _t.web3.utils.toWei(amount, "ether"),
+                slipp = amount * 0.95,
+                amountMinusSlippage = _t.web3.utils.toWei(slipp + "", "ether"),
+                timestamp = Math.floor( Date.now() / 1000 ),
+                deadline = Math.floor( timestamp + 18000 ),
+                pairs = [
+                    _t.wethaddr.toLowerCase(),
+                    _t.tokenaddr.toLowerCase()
+                ],
+                key = 'pancakeswap_' + Math.floor( Math.random() * 10000 );
+                
+            try {
+                await _t.router.methods.getAmountsOut( amountMinusSlippage, pairs ).call().then( async function(dataamount){
+                    await _t.router.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(
+                        dataamount[1],
+                        pairs,
+                        _t.address,
+                        deadline
+                    ).send({
+                        from: _t.address,
+                        value: swapamount
+                    }).then( function(data){
+                        if(data.transactionHash !== undefined){
+                            _t.wallet.notification('AP3 tokens have been transferred to your address.', key, 'success');
+                            
+                            return true;
+                        }
+                        _t.wallet.notification('The transaction was rejected.', key, 'error');
+                    });
+                });
+            }catch (e){
+                console.log(e);
+                this.wallet.notification('The transaction was rejected.', key, 'error');
+            }
         }
     },
     calc: function(x){
@@ -510,6 +589,10 @@ const Dapp = {
                 if(this.lptoken == null){
                     this.lptoken = new this.web3.eth.Contract( abi.lptoken, this.lptokenaddr );
                 }
+                
+                if(this.router == null){
+                    this.router = new this.web3.eth.Contract( abi.router, this.routeraddr );
+                }
                 this.wallet.reload();
             }
         }else {
@@ -673,7 +756,7 @@ const Dapp = {
                 from: this.address
             }).then(function(data){
                 if(data.transactionHash !== undefined){
-                    _t.wallet.notification('Cake-LP tokens have been transferred to your wallet.', key, 'success');
+                    _t.wallet.notification('AP3-LP tokens have been transferred to your wallet.', key, 'success');
                     
                     return true;
                 }
@@ -701,7 +784,7 @@ const Dapp = {
                     from: this.address
                 }).then(function(data){
                     if(data.transactionHash !== undefined){
-                        _t.wallet.notification('Cake-LP tokens has been approved to control by AP3 contract.', key+'_approve', 'success');
+                        _t.wallet.notification('AP3-LP tokens has been approved to control by AP3 contract.', key+'_approve', 'success');
                         
                         return true;
                     }
@@ -720,7 +803,7 @@ const Dapp = {
                 from: this.address
             }).then(function(data){
                 if(data.transactionHash !== undefined){
-                    _t.wallet.notification('Cake-LP tokens have been transferred to farm in AP3 contract.', key, 'success');
+                    _t.wallet.notification('AP3-LP tokens have been transferred to farm in AP3 contract.', key, 'success');
                     
                     return true;
                 }

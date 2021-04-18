@@ -38,9 +38,9 @@
 	
 	<!-- All CSS -->
 	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@800&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-	<link href="/css/plugins.6f637c.css" rel="stylesheet">
-	<link href="/css/main.6f637c.css" rel="stylesheet">
-	<link href="/css/responsive.6f637c.css" rel="stylesheet">
+	<link href="/css/plugins.08f366.css" rel="stylesheet">
+	<link href="/css/main.08f366.css" rel="stylesheet">
+	<link href="/css/responsive.08f366.css" rel="stylesheet">
 	
     
 </head>
@@ -65,49 +65,52 @@
 							🐒 AP3.TOWN
 						</a>
 					</li>
-						
+							
 					<li class="nav-item nav-link-features">
 						<a class="active nav-link" href="#features" data-text="🍌 Features">
 							🍌 Features
 						</a>
 					</li>
-						
+							
 					<li class="nav-item nav-link-about">
 						<a class="active nav-link" href="#about" data-text="🙊 About">
 							🙊 About
 						</a>
 					</li>
-						
+							
 					<li class="nav-item nav-link-farm">
 						<a class="active nav-link" href="#farm" data-text="🚜 Farm">
 							🚜 Farm
 						</a>
 					</li>
-						
+							
+					<li class="nav-item nav-link-exchange">
+						<a class="active nav-link" href="#exchange" data-text="💸 Buy AP3">
+							💸 Buy AP3
+						</a>
+					</li>
+							
 					<li class="nav-item nav-link-how_to_buy">
 						<a class="active nav-link" href="#how_to_buy" data-text="ℹ️ How to Buy">
 							ℹ️ How to Buy
 						</a>
 					</li>
-						
-					<li class="nav-item nav-link-presale">
-						<a class="active nav-link" href="#presale" data-text="🚀 Presale">
-							🚀 Presale
-						</a>
-					</li>
-						
+							
+					<!-- presale--presale - disabled -->
+							
+							
 					<li class="nav-item nav-link-nft">
 						<a class="active nav-link" href="#nft" data-text="🎨 NFT<sup>soon</sup>">
 							🎨 NFT<sup>soon</sup>
 						</a>
 					</li>
-						
+							
 					<li class="nav-item nav-link-wiki">
 						<a class="active nav-link" href="#wiki" data-text="📚  Wiki<sup>soon</sup>">
 							📚  Wiki<sup>soon</sup>
 						</a>
 					</li>
-											
+												
 				</ul>
 			</nav>
 		</div>
@@ -119,19 +122,6 @@
 		
 		<!-- begin of main-content -->
 		<div class="main-content">
-			<!-- begin of header -->
-			<header>
-				<div class="notification">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-12 text-center">
-								<h4>🍌  🍌  🍌  AP3 TOKEN PRESALE STARTS IN <time class="presalestart">-- --:--:--</time>  🍌  🍌  🍌</h4>								
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
-			<!-- end of header -->
 	
 			<!-- begin of home-wrapper -->
 			
@@ -397,7 +387,7 @@
                                         <p>LP TOKENS BALANCE</p> 
                                         <h2>
                                             <span class="lpbalance">0.00</span> 
-                                            <small class="lptokenname">Cake-LP</small>
+                                            <small class="lptokenname">AP3-LP</small>
                                         </h2>
                                     </div>
                                 </div>
@@ -407,7 +397,7 @@
                                     <div class="col-8">
                                         <div class="inp">
                                             <input type="text" value="0.0" id="lpamount">
-                                            <span><img src="/img/logo.svg" alt="ap3">Cake-LP</span>
+                                            <span><img src="/img/logo.svg" alt="ap3">AP3-LP</span>
                                         </div>
                                     </div>
                                     <div class="col-4 dappbtn" onclick="Dapp.farmlp( this )">
@@ -428,7 +418,7 @@
                                         <p>FARM BALANCE</p>
                                         <h2>
                                             <span class="farmbalance">0.00</span>
-                                            <small class="lptokenname">Cake-LP</small>
+                                            <small class="lptokenname">AP3-LP</small>
                                         </h2>
                                     </div>
                                 </div>
@@ -438,7 +428,7 @@
                                     <div class="col-8">
                                         <div class="inp">
                                             <input type="text" value="0.0" id="unfarmlpamount">
-                                            <span><img src="/img/logo.svg" alt="ap3">Cake-LP</span>
+                                            <span><img src="/img/logo.svg" alt="ap3">AP3-LP</span>
                                         </div>
                                     </div>
                                     <div class="col-4 dappbtn" onclick="Dapp.unfarmLp( this )">
@@ -473,6 +463,67 @@
                 </div>
     		</div>
 			<!-- end of farm-wrapper -->
+			
+			<!-- begin of exchange-wrapper -->
+			
+            <div id="exchange" class="wrapper exchange-wrapper presale-wrapper" data-animate data-animation-classes="about-inview">
+                <div class="container-fluid">
+    				<div class="row align-items-center">
+    					<div class="col-lg-3 col-xl-4 col-12 text-center">
+    					    <img src="/img/pancake.svg?ap3" class="img-presale" alt="pancake logo" />
+    					</div>
+    					<div class="col-lg-5 col-xl-4 col-12 text-center">
+    						<div class="box-single" id="presaletpl" style="min-height:450px">
+    						    								
+								<h4>
+									Buy AP3
+								</h4>
+								<p>
+									Trade tokens in an instant
+								</p>
+    						    
+                                <div class="form-group">
+                                    <label for="fromPancake">From</label>
+                                    <span><img src="/img/blogo.png" alt="blogo"> BNB</span>
+                                    <input type="text" class="form-control" id="fromPancake" value="0.0" onkeyup="Dapp.calcPancake(this)">
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="arrow-circle">
+                                        <img src="/img/arrow.svg?ap3" alt="arrow">
+                                    </div>
+                                </div>
+                                
+    						    
+                                <div class="form-group">
+                                    <label for="toPancake">To (estimated)</label>
+                                    <span><img src="/img/logo.svg" alt="ap3"> AP3</span>
+                                    <input type="text" class="form-control" readonly id="toPancake" value="0.0">
+                                </div>
+                                <p class="text-left mt-3">
+                                    <span>Minimum received</span> 
+                                    <span style="float:right;">
+                                        <span id="toPancakeSlippage">0.0</span> AP3
+                                    </span>
+                                </p>
+                                
+                                <div id="presaleBtnisConnected">
+                                    <div id="pancakeBtn" style="display:none; margin-top:20px;">
+                                        <button class="default-btn" onclick="Dapp.buyPancake()">BUY</button>
+                                    </div>
+                                </div>
+                                <div id="presaleBtnisDisconnected">
+                                    <p>First connect wallet</p>
+                                </div>
+    						</div>
+    					</div>
+    					<div class="col-lg-3 col-xl-4 col-12 text-center">
+    					    <img src="/img/logo.svg?ap3" class="img-presale" alt="ap3 logo" />
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+			<!-- end of exchange-wrapper -->
 			
 			<!-- begin of how_to_buy-wrapper -->
 			
@@ -644,83 +695,7 @@
 				</div>
 			</div>
 			<!-- end of how_to_buy-wrapper -->
-			
-			<!-- begin of presale-wrapper -->
-			
-            <div id="presale" class="wrapper presale-wrapper presale-wrapper" data-animate data-animation-classes="about-inview">
-                <div class="container-fluid">
-    				<div class="row align-items-center">
-    					<div class="col-lg-3 col-xl-4 col-12 text-center">
-    					    <img src="/img/logo.svg?ap3" class="img-presale" alt="ap3 logo" />
-    					</div>
-    					<div class="col-lg-5 col-xl-4 col-12 text-center">
-    						<div class="box-single" id="presaletpl" style="min-height:450px">
-    						    <div class="overlayPresale">
-    						        									
-									<p>
-										AP3 TOKEN PRESALE STARTS IN <time class="presalestart">-- --:--:--</time>
-										<br>
-										</p>
-    						    </div>
-    						    
-    						    								
-								<h4>
-									AP3 TOKEN PRESALE
-								</h4>
-    						    
-                                <div class="form-group">
-                                    <label for="fromPresale">Contribution</label>
-                                    <span><img src="/img/blogo.png" alt="blogo"> BNB</span>
-                                    <input type="text" class="form-control" id="fromPresale" value="0.0" onkeyup="Dapp.calc(this)">
-                                </div>
-                                
-                                <div id="presaleError" style="display:none">
-                                    min 0.1 BNB - max 10.0 BNB
-                                </div>
-                                
-                                <div id="toPresaleCont" style="display:none">
-                                    <div class="text-center">
-                                        <div class="arrow-circle">
-                                            <img src="/img/arrow.svg?ap3" alt="arrow">
-                                        </div>
-                                    </div>
-                                    
-        						    
-                                    <div class="form-group">
-                                        <label for="toPresale">Receive</label>
-                                        <span><img src="/img/logo.svg" alt="ap3"> AP3</span>
-                                        <input type="text" class="form-control" readonly id="toPresale" value="0.0">
-                                    </div>
-                                </div>
-                                
-                                <div id="presaleBtnisConnected">
-                                    <div id="presaleBtn" style="display:none; margin-top:20px;">
-                                        <button class="default-btn" onclick="Dapp.contributePresale(this)">CONTRIBUTE</button>
-                                    </div>
-                                </div>
-                                <div id="presaleBtnisDisconnected">
-                                    <p>First connect wallet</p>
-                                </div>
-                                
-                                <div id="referal">
-                                    <p>Share your referral link to earn rewards</p>
-                                    <div class="align-items-center">
-                                        <div class="col-9 refaddr"></div>
-                                        <div class="col-3 refcopy" onclick="Dapp.copyref()">
-                                            Copy link
-                                        </div>
-                                    </div>
-                                </div>
-    						</div>
-    					</div>
-    					<div class="col-lg-3 col-xl-4 col-12 text-center">
-    						<img src="/img/banana.svg?ap3" class="img-presale" alt="banana" />
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-			<!-- end of presale-wrapper -->
-			
+			<!-- presale--presale - disabled -->
 			<!-- begin of nft-wrapper -->
 			
     		<div id="nft" class="wrapper nft-wrapper text-center hero nft-hero" data-animate data-animation-classes="nft-inview hero-inview">
@@ -852,22 +827,24 @@
 	    "dappmode": "presale",
 	    "rpcurl": "https:\/\/bsc-dataseed.binance.org\/",
 	    "chainid": 56,
-	    "presalestart": "2021-04-18 18:00"
+	    "presalestart": "2021-04-18 18:00",
+	    "routeraddr": "0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F",
+	    "wethaddr": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
 	};
 	</script>
     <!-- end of Dapp config -->
     <!-- begin of all JS -->
-    <script src="/js/jquery-3.3.1.min.6f637c.js"></script>
-	<script src="/js/plugins.6f637c.js"></script>
-	<script src="/js/animate.min.6f637c.js"></script>
-	<script src="/js/web3-provider.min.6f637c.js"></script>
-	<script src="/js/web3.min.6f637c.js"></script>
-	<script src="/js/velocity.min.6f637c.js"></script>
-	<script src="/js/moment-with-locales.min.6f637c.js"></script>
-	<script src="/js/moment-timezone.min.6f637c.js"></script>
-	<script src="/js/jquery.countdown.min.6f637c.js"></script>
-	<script src="/js/abi.6f637c.js"></script>
-	<script src="/js/main.6f637c.js"></script>
+    <script src="/js/jquery-3.3.1.min.08f366.js"></script>
+	<script src="/js/plugins.08f366.js"></script>
+	<script src="/js/animate.min.08f366.js"></script>
+	<script src="/js/web3-provider.min.08f366.js"></script>
+	<script src="/js/web3.min.08f366.js"></script>
+	<script src="/js/velocity.min.08f366.js"></script>
+	<script src="/js/moment-with-locales.min.08f366.js"></script>
+	<script src="/js/moment-timezone.min.08f366.js"></script>
+	<script src="/js/jquery.countdown.min.08f366.js"></script>
+	<script src="/js/abi.08f366.js"></script>
+	<script src="/js/main.08f366.js"></script>
 	
     <!-- end of all JS -->
     
