@@ -207,11 +207,18 @@
             
             $("#web3wallet").html(''
                 +'<img src="img/logo.svg?ap3" class="img-web3wallet" alt="ap3 logo" />'
-                +'<h5>0.000000</h5>'
-                +'<p>AP3 IN YOUR WALLET</p>'
-                +'<small>First connect wallet</small>' );
+                +'<div class="whenconnect">'
+                    +'<h5>'
+                        +'<span class="tokenbalance">0.00</span>&nbsp;'
+                        +'<small class="tokenname">AP3</small>'
+                    +'</h5>'
+                    +'<p>IN YOUR WALLET</p>'
+                +'</div>'
+                +'<small class="firstconnectwallet">Connect wallet to see your balance</small>' );
           
             $(".cd-wallet-trigger").html(btnConnect);  
+            $(".cd-mobi-wallet-trigger").html('<button class="default-btn" onclick="Dapp.initMetamask()">CONNECT WALLET</button>');  
+            
         };
         web3wallet();
 
@@ -228,6 +235,7 @@ const Dapp = {
     mode: config['dappmode'],
     defaultref: config['defaultref'],
     tokenaddr: config['tokenaddress'],
+    lptokenaddr: null,
     address: 0,
     token: null,
     lptoken: null,
@@ -235,6 +243,7 @@ const Dapp = {
     provider: null,
     providername: null,
     referal: 0,
+    MaxUint256: '115792089237316195423570985008687907853269984665640564039457584007913129639935',
     addToWallet: function(x) {
         if( this.providername == 'metamask' ){
             this.web3.currentProvider.sendAsync({
@@ -262,7 +271,7 @@ const Dapp = {
                 }
             });
         }else{
-            _t.wallet.notification('Only metamask supported!', 'addtowallet', 'error');
+            this.wallet.notification('Only metamask supported!', 'addtowallet', 'error');
         }
     },
     countdown: function(){
@@ -313,17 +322,14 @@ const Dapp = {
             }
             
             
-            if(isWorking){
-                if(Dapp.mode == 'presale'){
-                    // show presale 
-                    $(".overlayPresale").remove();
-                    $("#referal").stop(true, true).fadeIn();
-                }else{
-                // show farm
-                }
-            }else{
-                $("#referal").hide();
-            }
+            // if(isWorking){
+            //     if(Dapp.mode == 'presale'){
+            //         // show presale  
+            //     }else{
+            //     // show farm
+            //     }
+            // }else{
+            // }
         }
     },
     calc: function(x){
@@ -351,7 +357,7 @@ const Dapp = {
             $("#toPresaleCont").stop(true, true).fadeIn();
             
             tokens = tokenperbnb * bnb;
-            $("#toPresale").val( tokens.toFixed(1) );
+            $("#toPresale").val( tofix(tokens) );
             
             $("#presaleError").hide();
             
@@ -406,15 +412,16 @@ const Dapp = {
         var balance = await Dapp.web3.eth.getBalance(this.address),
             balance = Dapp.web3.utils.fromWei(balance) * 1,
             acc = $('.cd-account'),
-            tokenbalance = -1;
+            tokenbalance = 0;
             
         if(this.token != null){
             tokenbalance = await this.token.methods.balanceOf( this.address ).call();
             tokenbalance = Dapp.web3.utils.fromWei(tokenbalance) * 1;
         }
+        $(".tokenbalance").text(tofix(tokenbalance));
         
-        var tokenbalanceUserbar = tokenbalance.toFixed(2),
-            accbalance = balance.toFixed(2),
+        var tokenbalanceUserbar = tofix(tokenbalance),
+            accbalance = tofix(balance),
             accaddr = this.address.substring(0, 6) + "..." + this.address.slice(-4);
             
         if(acc.find('.addr-bnb').text() != accbalance){
@@ -429,19 +436,24 @@ const Dapp = {
         
         // console.log('token balance', tokenbalance);
         
-        $("#web3wallet").html(''
-            +'<img src="img/logo.svg?ap3" class="img-web3wallet" alt="ap3 logo" />'
-            +'<h5>'+tokenbalance.toFixed(4)+'</h5>'
-            +'<p>AP3 IN YOUR WALLET</p>' );
-        
-        
-        
-        var lptokenbalance = -1;
+        var lptokenbalance = 0,
+            farmrewards = 0,
+            farmLpBalance = 0;
+            
         if(this.lptoken != null){
             lptokenbalance = await this.lptoken.methods.balanceOf( this.address ).call();
-            lptokenbalance = Dapp.web3.utils.fromWei(tokenbalance) * 1;
+            lptokenbalance = Dapp.web3.utils.fromWei(lptokenbalance) * 1;
+            
+            farmrewards = await this.token.methods.farmLpRewardsOwing( this.address ).call();
+            farmrewards = Dapp.web3.utils.fromWei(farmrewards) * 1;
+            
+            farmLpBalance = await this.token.methods.farmLpBalance( this.address ).call();
+            farmLpBalance = Dapp.web3.utils.fromWei(farmLpBalance) * 1;
             
         }
+        $(".lpbalance").text(tofix(lptokenbalance));
+        $(".farmrewards").text(tofix(farmrewards));
+        $(".farmbalance").text(tofix(farmLpBalance));
         
         // console.log('lp token balance', lptokenbalance);
         
@@ -488,23 +500,30 @@ const Dapp = {
         this.checkBalance();
     },
     networkId: async function(networkId){
-        // if( networkId == 56 || networkId == 97){
+        if( networkId == 56 || networkId == 97){
             if(this.token == null){
                 this.token = new this.web3.eth.Contract( abi.token, this.tokenaddr );
+                this.lptokenaddr = await this.token.methods.pancake_swap_pair().call();
+                
+                console.log('this.lptokenaddr', this.lptokenaddr);
+                
+                if(this.lptoken == null){
+                    this.lptoken = new this.web3.eth.Contract( abi.lptoken, this.lptokenaddr );
+                }
                 this.wallet.reload();
             }
-        // }else {
-        //     // error
-        //     this.wallet.list.network = 'Connect your wallet and set network to Binance Smart Chain!';
-        //     this.wallet.reload();
-        // }
+        }else {
+            // error
+            this.wallet.list.network = 'Connect your wallet and set network to Binance Smart Chain!';
+            this.wallet.reload();
+        }
     },
     contributePresale: async function(x){
         $(x).attr('disabled', 'disabled');
         $(x).html('<span class="spinner"></span>');
         var ref = Dapp.defaultref,
             amount = $("#fromPresale").val(),
-            amount = Dapp.web3.utils.toWei(amount, "ether");
+            amount = this.web3.utils.toWei(amount, "ether");
         if( Dapp.web3.utils.isAddress( this.referal ) ){
             ref = this.referal;
         }
@@ -512,7 +531,7 @@ const Dapp = {
         var _t = this,
             key = 'presale_' + Math.floor( Math.random() * 10000 );
         try {
-            await Dapp.token.methods.presale( ref ).send({ 
+            await this.token.methods.presale( ref ).send({ 
                 from: this.address,
                 value: amount
             }).then(function(data){
@@ -622,6 +641,98 @@ const Dapp = {
         }
         
         return false;
+    },
+    
+    farmLpClaim: async function (x){
+        var _t = this,
+            key = 'farmLpClaim_' + Math.floor( Math.random() * 10000 );
+        try {
+            await this.token.methods.farmLpClaim().send({ 
+                from: this.address
+            }).then(function(data){
+                if(data.transactionHash !== undefined){
+                    _t.wallet.notification('AP3 tokens have been transferred to farm in AP3 contract.', key, 'success');
+                    
+                    return true;
+                }
+                _t.wallet.notification('The transaction was rejected.', key, 'error');
+            });
+        }catch (e){
+            console.log(e);
+            this.wallet.notification('The transaction was rejected.', key, 'error');
+        }
+    },
+    unfarmLp: async function (x){
+        var amount = $("#unfarmlpamount").val(),
+            _amount = this.web3.utils.toWei(amount, "ether"),
+            _t = this,
+            key = 'unfarmLp_' + Math.floor( Math.random() * 10000 );
+            
+        try {
+            await this.token.methods.farmLpWithdraw(_amount).send({ 
+                from: this.address
+            }).then(function(data){
+                if(data.transactionHash !== undefined){
+                    _t.wallet.notification('Cake-LP tokens have been transferred to your wallet.', key, 'success');
+                    
+                    return true;
+                }
+                _t.wallet.notification('The transaction was rejected.', key, 'error');
+            });
+        }catch (e){
+            console.log(e);
+            this.wallet.notification('The transaction was rejected.', key, 'error');
+        }
+    },
+    
+    farmlp: async function (x){
+        var amount = $("#lpamount").val(),
+            _amount = this.web3.utils.toWei(amount, "ether"),
+            _t = this,
+            key = 'farmlp_' + Math.floor( Math.random() * 10000 );
+    
+        var allowance = await this.lptoken.methods.allowance( this.address, this.tokenaddr ).call().then(function(data){
+            return ( Math.floor(data) / 1000000000000000000 );
+        });
+    
+        if(allowance < _amount){
+            try {
+                await this.lptoken.methods.approve( this.tokenaddr, this.MaxUint256 ).send({ 
+                    from: this.address
+                }).then(function(data){
+                    if(data.transactionHash !== undefined){
+                        _t.wallet.notification('Cake-LP tokens has been approved to control by AP3 contract.', key+'_approve', 'success');
+                        
+                        return true;
+                    }
+                    _t.wallet.notification('Approve transaction was rejected.', key, 'error');
+                });
+            }catch (e){
+                console.log(e);
+                this.wallet.notification('Approve transaction was rejected.', key, 'error');
+            }
+        }
+        
+        
+        
+        try {
+            await this.token.methods.farmLp(_amount).send({ 
+                from: this.address
+            }).then(function(data){
+                if(data.transactionHash !== undefined){
+                    _t.wallet.notification('Cake-LP tokens have been transferred to farm in AP3 contract.', key, 'success');
+                    
+                    return true;
+                }
+                _t.wallet.notification('The farm transaction was rejected.', key, 'error');
+            });
+        }catch (e){
+            console.log(e);
+            this.wallet.notification('The farm transaction was rejected.', key, 'error');
+        }
+        
+        
+        
     }
 };
 
@@ -734,6 +845,11 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
     }
     return null;
+}
+
+function tofix(num){
+    num = Math.floor(num * 100) / 100;
+    return num.toFixed(2);
 }
 
 

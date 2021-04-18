@@ -806,7 +806,8 @@ body.noscroll header.fixed {
 
 .box-single {
 	margin-bottom: 30px;
-	padding: 40px;
+	padding: 2rem;
+    min-height: 10rem;
 	position: relative;
 	border: 1px solid #3deaa4;
 	background-color: #111318;
@@ -1330,7 +1331,16 @@ body.noscroll header.fixed {
 }
 
 #web3wallet h5 {
+	font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
 	margin: 0;
+}
+#web3wallet h5 small {
+	font-size: 50%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #3eeaa3;
 }
 
 .presale-wrapper .box-single .overlayPresale  {
@@ -1551,7 +1561,7 @@ body.noscroll header.fixed {
     padding: 8px 20px;
 }
 .cd-account .addr{
-	background:#2d2f35;
+	background:#11141a;
     border-radius: 20px;
 	position:relative;
 	cursor:pointer;
@@ -1566,7 +1576,7 @@ body.noscroll header.fixed {
 	right:0;
 	left:0;
 	color:#fff;
-	background:#2d2f35;
+	background:#11141a;
     border-radius: 20px;
     line-height:40px;
     text-align:center;
@@ -1598,6 +1608,7 @@ body.noscroll header.fixed {
 	font-size: 0.8rem;
     display: block;
     line-height: 1rem;
+    display:none;
 }
 #referal p {
 	margin:0;
@@ -1609,6 +1620,9 @@ body.noscroll header.fixed {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+}
+.connected #referal {
+	display:block;
 }
 .refcopy {
     opacity: 0.7;
@@ -1649,7 +1663,7 @@ body.noscroll header.fixed {
 }
 .addr-bnb {
 	border-left:1px solid rgba(255,255,255,0.5);
-	padding-left:5px;
+	padding-left:8px;
 	margin-left:5px;
 }
 
@@ -1671,12 +1685,170 @@ body.noscroll header.fixed {
 #metamaskAddToWallet,
 #presaleBtnisDisconnected,
 #presaleBtnisConnected,
-#referal {
+#referal,
+#farm,
+.whenconnect,
+.firstconnectwallet {
 	display:none;
 }
 .disconnected #presaleBtnisDisconnected,
 .connected #presaleBtnisConnected,
 .connected #referal,
-.connected #metamaskAddToWallet {
+.connected #metamaskAddToWallet,
+.connected #farm,
+.connected .whenconnect,
+.disconnected .firstconnectwallet {
 	display:block;
 }
+
+
+.nav-link-farm {
+	display:none;
+}
+
+.connected .nav-link-farm {
+	display: list-item;
+}
+
+.farm-wrapper {
+    padding: 8rem 2rem;
+    background:#000;
+}
+
+.box-header {
+    color: #000;
+    background-color: #3deaa4;
+    padding: .7rem 1rem .7rem 2rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    border: solid #3deaa4;
+    border-width: 1px 1px 0;
+    display: inline-block;
+}
+
+.box-header:after {
+	position: absolute;
+    background-color: #3deaa4;
+    transform-origin: bottom left;
+    width: 1.5rem;
+    border: solid #3deaa4;
+    border-width: 1px 1px 0;
+    top: -1px;
+    bottom: -1px;
+    content: "";
+    right: -1.5rem;
+    transform: skewX( 20deg );
+    border-left: none;
+    border-top-right-radius: 4px;
+}
+
+.farm-wrapper .box-single {
+	padding:0;
+}
+
+.farm-wrapper .box-single .farm-content {
+	padding:2rem;
+	min-height: 7rem;
+}
+.farm-wrapper .box-single .farm-form {
+	padding:2rem;
+    background: #292c35;
+}
+.farm-wrapper .box-single .farm-form .inp {
+	background:transparent;
+	border:1px solid rgba(255,255,255,0.3);
+	width:100%;
+	display:block;
+	transition:all 0.3s;
+	color:#fff;
+	padding:0.5rem 1rem;
+	font-size: 0.8rem;
+    line-height: 1rem;
+    text-align: right;
+    position:relative;
+}
+.farm-wrapper .box-single .farm-form .inp input {
+	display:block;
+	position:absolute;
+	z-index:2;
+	outline:0;
+	border:none; 
+    width: 100%;
+    background: transparent;
+    color: #fff;
+	padding: 0.5rem 1rem;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.farm-wrapper .box-single .farm-form .inp:hover {
+	border:1px solid rgba(255,255,255,1);
+	outline:0;
+}
+.farm-wrapper .box-single .farm-form .inp span {
+	display:inline-block; 
+    font-size: 0.75rem; 
+    line-height: 1.7rem;
+    color: rgba(255,255,255,0.6);
+}
+.farm-wrapper .box-single .farm-form .inp img {
+	width: 16px;
+	display:inline-block;
+	margin: 0 3px 0 0;
+}
+.farm-wrapper .box-single .farm-form .dappbtn {
+    opacity: 0.7;
+    cursor:pointer;
+    text-align:right;
+	transition:all 0.3s;
+	font-size: 0.8rem;
+    line-height: 1rem;
+    padding:0;
+}
+.farm-wrapper .box-single .farm-form .dappbtn:hover {
+    opacity: 1;
+}
+
+.farm-wrapper .box-single .farm-form .dappbtn span {
+	border:1px solid rgba(255,255,255,0);
+	transition:all 0.3s;
+	display:inline-block;
+	padding:0.5rem 1rem;
+}
+.farm-wrapper .box-single .farm-form .dappbtn:hover span {
+	border:1px solid rgba(255,255,255,1);
+}
+.farm-wrapper .box-single h2 {
+    font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
+}
+.farm-wrapper .box-single h2 small {
+	font-size:50%;
+    font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
+	color: #3eeaa3;
+}
+
+
+.disconnected .cd-mobi-wallet-trigger{
+    top: 80px;
+    right: 10px;
+    position: fixed;
+    z-index: 11;
+	
+}
+
+
+
+
+@media (min-width: 767.98px) { 
+	.disconnected .cd-mobi-wallet-trigger{
+		display:none;
+	}
+} 
