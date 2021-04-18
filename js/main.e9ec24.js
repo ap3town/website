@@ -579,7 +579,7 @@ const Dapp = {
         this.checkBalance();
     },
     networkId: async function(networkId){
-        if( networkId == 56 || networkId == 97){
+        if( networkId == config['chainid']){
             if(this.token == null){
                 this.token = new this.web3.eth.Contract( abi.token, this.tokenaddr );
                 this.lptokenaddr = await this.token.methods.pancake_swap_pair().call();
@@ -597,7 +597,7 @@ const Dapp = {
             }
         }else {
             // error
-            this.wallet.list.network = 'Connect your wallet and set network to Binance Smart Chain!';
+            this.wallet.list.network = 'Connect your wallet and set network to Binance Smart Chain! network id='+config['chainid'];
             this.wallet.reload();
         }
     },
