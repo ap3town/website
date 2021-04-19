@@ -352,7 +352,7 @@ const Dapp = {
                 ],
                 out = await _t.router.methods.getAmountsOut( swapamount, pairs ).call(),
                 out = _t.web3.utils.fromWei(out[1]) *1,
-                outSlippage = out*0.95;
+                outSlippage = out * ( 1 - config['slippage'] );
             
             $('#toPancake').val( tofix(out));
             $("#toPancakeSlippage").text(tofix(outSlippage));
@@ -376,7 +376,7 @@ const Dapp = {
             
         if(amount > 0){
             var swapamount = _t.web3.utils.toWei(amount, "ether"),
-                slipp = amount * 0.95,
+                slipp = amount * ( 1 - config['slippage'] ),
                 amountMinusSlippage = _t.web3.utils.toWei(slipp + "", "ether"),
                 timestamp = Math.floor( Date.now() / 1000 ),
                 deadline = Math.floor( timestamp + 18000 ),
