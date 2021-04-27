@@ -811,6 +811,7 @@ body.noscroll header.fixed {
 	position: relative;
 	border: 1px solid #3deaa4;
 	background-color: #111318;
+	position:relative;
 }
 
 .about-inview .box-single,
@@ -909,6 +910,8 @@ body.noscroll header.fixed {
 .presale-wrapper .box-single .arrow-circle {
 	display: inline-block;
 	padding: 5px;
+	color: #3eeaa3;
+    font-size: 18px;
 }
 
 .presale-wrapper .box-single .arrow-circle img {
@@ -1673,26 +1676,42 @@ body.noscroll header.fixed {
     display: inline-block;
     text-align: center;
 }
-#presaleBtnisDisconnected p {
-    color: #fff;
-    margin: 20px auto 0 auto;
-    font-size: 1.2rem;
+.presaleBtnisDisconnected {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.3);
+    text-align:center;
+	z-index:5;
 }
-
+.presaleBtnisDisconnected p {
+    color: #fff;
+    margin: 0;
+    font-size: 1.2rem;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+.disconnected .presaleBtnisConnected {
+    opacity:0.75;
+    filter: blur(3px);
+}
 #metamaskAddToWallet {
 	margin:20px 0;
 }
 #metamaskAddToWallet,
-#presaleBtnisDisconnected,
-#presaleBtnisConnected,
+.presaleBtnisDisconnected,
 #referal,
 #farm,
 .whenconnect,
 .firstconnectwallet {
 	display:none;
 }
-.disconnected #presaleBtnisDisconnected,
-.connected #presaleBtnisConnected,
+.disconnected .presaleBtnisDisconnected,
+.connected .presaleBtnisConnected,
 .connected #referal,
 .connected #metamaskAddToWallet,
 .connected #farm,
@@ -1713,6 +1732,10 @@ body.noscroll header.fixed {
 .farm-wrapper {
     padding: 8rem 2rem;
     background:#000;
+}
+.pancake-wrapper {
+    padding: 8rem 2rem;
+	background: #000 url(../img/bgpancake.png) top center repeat;
 }
 
 .box-header {

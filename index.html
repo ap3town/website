@@ -38,9 +38,9 @@
 	
 	<!-- All CSS -->
 	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@800&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-	<link href="/css/plugins.8bd567.css" rel="stylesheet">
-	<link href="/css/main.8bd567.css" rel="stylesheet">
-	<link href="/css/responsive.8bd567.css" rel="stylesheet">
+	<link href="/css/plugins.8ca42b.css" rel="stylesheet">
+	<link href="/css/main.8ca42b.css" rel="stylesheet">
+	<link href="/css/responsive.8ca42b.css" rel="stylesheet">
 	
     
 </head>
@@ -85,8 +85,8 @@
 					</li>
 							
 					<li class="nav-item nav-link-exchange">
-						<a class="active nav-link" href="#exchange" data-text="💸 Buy AP3">
-							💸 Buy AP3
+						<a class="active nav-link" href="#exchange" data-text="🥞 PancakeSwap">
+							🥞 PancakeSwap
 						</a>
 					</li>
 							
@@ -372,7 +372,7 @@
 			
             <div id="farm" class="wrapper farm-wrapper farm-wrapper" data-animate data-animation-classes="about-inview">
 				<div class="row">
-				    <div class="col-12 mb-5">
+				    <div class="col-12 mb-5 text-center">
 					    								
 								<h4>
 									AP3-BNB LP TOKEN FARM
@@ -475,63 +475,122 @@
 			
 			<!-- begin of exchange-wrapper -->
 			
-            <div id="exchange" class="wrapper exchange-wrapper presale-wrapper" data-animate data-animation-classes="about-inview">
-                <div class="container-fluid">
-    				<div class="row align-items-center">
-    					<div class="col-lg-3 col-xl-4 col-12 text-center">
-    					    <img src="/img/pancake.svg?ap3" class="img-presale" alt="pancake logo" />
-    					</div>
-    					<div class="col-lg-5 col-xl-4 col-12 text-center">
-    						<div class="box-single" id="presaletpl" style="min-height:450px">
-    						    								
+            <div id="exchange" class="wrapper exchange-wrapper presale-wrapper pancake-wrapper" data-animate data-animation-classes="about-inview">
+				<div class="row align-items-center">
+				    <div class="col-12 mb-5 text-center">
+					    								
 								<h4>
-									Buy AP3
+									PancakeSwap v1
 								</h4>
 								<p>
-									Trade tokens in an instant
+									The #1 AMM and yield farm on Binance Smart Chain.
 								</p>
-    						    
-                                <div class="form-group">
+					</div>
+                    <div class="col">
+                        <div class="box-header">
+                           Buy AP3 <sup>via PancakeSwap</sup>
+                        </div>
+						<div class="box-single" class="presaletpl" style="min-height:350px">
+                            <div class="presaleBtnisConnected">
+    						    <div class="form-group">
                                     <label for="fromPancake">From</label>
                                     <span><img src="/img/blogo.png" alt="blogo"> BNB</span>
                                     <input type="text" class="form-control" id="fromPancake" value="0.0" onkeyup="Dapp.calcPancake(this)">
                                 </div>
-    						    
-                                <div id="presaleBtnisConnected">
-                                
-                                    <div class="text-center">
-                                        <div class="arrow-circle">
-                                            <img src="/img/arrow.svg?ap3" alt="arrow">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="toPancake">To (estimated)</label>
-                                        <span><img src="/img/logo.svg" alt="ap3"> AP3</span>
-                                        <input type="text" class="form-control" readonly id="toPancake" value="0.0">
-                                    </div>
-                                    
-                                    <p class="text-left mt-3">
-                                        <span>Minimum received</span> 
-                                        <span style="float:right;">
-                                            <span id="toPancakeSlippage">0.0</span> AP3
-                                        </span>
-                                    </p>
-                                
-                                    <div id="pancakeBtn" style="display:none; margin-top:20px;">
-                                        <button class="default-btn" onclick="Dapp.buyPancake()">BUY</button>
+                            
+                                <div class="text-center">
+                                    <div class="arrow-circle">
+                                        <img src="/img/arrow.svg?ap3" alt="arrow">
                                     </div>
                                 </div>
-                                <div id="presaleBtnisDisconnected">
-                                    <p>First connect wallet</p>
+                                
+                                <div class="form-group">
+                                    <label for="toPancake">To (estimated)</label>
+                                    <span><img src="/img/logo.svg" alt="ap3"> AP3</span>
+                                    <input type="text" class="form-control" readonly id="toPancake" value="0.0">
                                 </div>
-    						</div>
-    					</div>
-    					<div class="col-lg-3 col-xl-4 col-12 text-center">
-    					    <img src="/img/logo.svg?ap3" class="img-presale" alt="ap3 logo" />
-    					</div>
-    				</div>
-    			</div>
+                                
+                                <p class="text-left mt-3">
+                                    <span>Minimum received</span> 
+                                    <span style="float:right;">
+                                        <span id="toPancakeSlippage">0.0</span> AP3
+                                    </span>
+                                </p>
+                            
+                                <div style="margin-top:20px;">
+                                    <button class="default-btn" onclick="Dapp.buyPancake()">BUY</button>
+                                </div>
+                            </div>
+                            <div class="presaleBtnisDisconnected">
+                                <p>First connect wallet</p>
+                            </div>
+						</div>
+					</div>
+					
+					
+                    <div class="col">
+                        <div class="box-header">
+                           Add liquidity <sup>via PancakeSwap</sup>
+                        </div>
+						<div class="box-single" class="presaletpl" style="min-height:350px">
+						    <div class="presaleBtnisConnected">
+    						    <div class="form-group">
+                                    <label for="fromPancake">Input</label>
+                                    <span><img src="/img/blogo.png" alt="blogo"> BNB</span>
+                                    <input type="text" class="form-control" id="inputLpAPancake" value="0.0" onkeyup="Dapp.calcLpPancake(this)">
+                                </div>
+    						
+                                <div class="text-center">
+                                    <div class="arrow-circle">
+                                        +
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="toPancake">Input</label>
+                                    <span><img src="/img/logo.svg" alt="ap3"> AP3</span>
+                                    <input type="text" class="form-control" readonly id="inputLpBPancake" value="0.0">
+                                </div>
+                            
+                                <div style="margin-top:20px;">
+                                    <button class="default-btn" onclick="Dapp.addLpPancake()">Add Liquidity</button>
+                                </div>
+                            </div>
+                            <div class="presaleBtnisDisconnected">
+                                <p>First connect wallet</p>
+                            </div>
+						</div>
+					</div>
+					
+					
+                    <div class="col">
+                        <div class="box-header">
+                           Remove liquidity <sup>via PancakeSwap</sup>
+                        </div>
+						<div class="box-single" class="presaletpl" style="min-height:350px">
+                            <div class="presaleBtnisConnected">
+    						    <p class="text-left mb-3">
+    						        <span>Liquidity tokens balance</span> 
+    						        <span style="float:right;">
+    						            <span class="lpbalance"></span> AP3-LP
+    						        </span>
+    						    </p>
+    						    <div class="form-group">
+                                    <label for="fromPancake">Amount</label>
+                                    <span><img src="/img/logo.svg" alt="ap3lp"> AP3-LP</span>
+                                    <input type="text" class="form-control" id="removeLpPancake" value="0.0">
+                                </div>
+                                
+                                <div style="margin-top:20px;">
+                                    <button class="default-btn" onclick="Dapp.rmLpPancake()">Remove Liquidity</button>
+                                </div>
+                            </div>
+                            <div class="presaleBtnisDisconnected">
+                                <p>First connect wallet</p>
+                            </div>
+						</div>
+					</div>
+				</div>
     		</div>
 			<!-- end of exchange-wrapper -->
 			
@@ -845,16 +904,16 @@
 	</script>
     <!-- end of Dapp config -->
     <!-- begin of all JS -->
-    <script src="/js/jquery-3.3.1.min.8bd567.js"></script>
-	<script src="/js/plugins.8bd567.js"></script>
-	<script src="/js/animate.min.8bd567.js"></script>
-	<script src="/js/web3-provider.min.8bd567.js"></script>
-	<script src="/js/web3.min.8bd567.js"></script>
-	<script src="/js/velocity.min.8bd567.js"></script>
-	<script src="/js/moment-with-locales.min.8bd567.js"></script>
-	<script src="/js/moment-timezone.min.8bd567.js"></script>
-	<script src="/js/jquery.countdown.min.8bd567.js"></script>
-	<script src="/js/app.8bd567.js"></script>
+    <script src="/js/jquery-3.3.1.min.8ca42b.js"></script>
+	<script src="/js/plugins.8ca42b.js"></script>
+	<script src="/js/animate.min.8ca42b.js"></script>
+	<script src="/js/web3-provider.min.8ca42b.js"></script>
+	<script src="/js/web3.min.8ca42b.js"></script>
+	<script src="/js/velocity.min.8ca42b.js"></script>
+	<script src="/js/moment-with-locales.min.8ca42b.js"></script>
+	<script src="/js/moment-timezone.min.8ca42b.js"></script>
+	<script src="/js/jquery.countdown.min.8ca42b.js"></script>
+	<script src="/js/app.8ca42b.js"></script>
 	
     <!-- end of all JS -->
     
