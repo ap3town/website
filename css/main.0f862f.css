@@ -1875,3 +1875,27 @@ body.noscroll header.fixed {
 		display:none;
 	}
 } 
+
+
+.dice-wrapper {
+    padding: 8rem 2rem;
+    background: #000 url(../img/cross.svg) center center repeat;
+    background-size:cover;
+}
+.dice-wrapper .default-btn {
+	position:absolute;
+	top:50%;
+    white-space: nowrap;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+.dice-container {
+	position:relative;
+	border:1px solid #3beaa3;
+	background:#000;
+    width: 20rem;
+    height: 17.2rem;
+	text-align:center;
+	display:inline-block;
+}
